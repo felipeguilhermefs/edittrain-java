@@ -20,8 +20,8 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    public Course createCourse(String name, String description) {
-        var course = new Course(UUID.randomUUID().toString(), name, description);
+    public Course createCourse(Course course) {
+        course.setId(UUID.randomUUID().toString());
         courseRepository.save(course);
         return course;
     }

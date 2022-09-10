@@ -27,7 +27,7 @@ public class CourseServiceTest {
     class CreatingACourse {
         @Test
         public void createsANewCourseAndSavesItInTheRepository() {
-            var createdCourse = courseService.createCourse("name", "description");
+            var createdCourse = courseService.createCourse(new Course("", "name", "description"));
             verify(courseRepository).save(createdCourse);
             assertThat(createdCourse.getId(), is(not("")));
         }

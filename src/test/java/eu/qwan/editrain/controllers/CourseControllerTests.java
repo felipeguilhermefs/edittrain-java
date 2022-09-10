@@ -65,11 +65,11 @@ public class CourseControllerTests {
     public class PostingACourse {
         @Test
         public void savesItInTheDatabase() throws Exception {
-            Course theCreatedCourse = Course.builder().id("someId").name("courseName").description("someDescription").build();
-            when(courseService.createCourse("courseName", "courseDescription")).thenReturn(theCreatedCourse);
-            mockMvc.perform(jsonPost("/courses", toJson(new CreateCourseBody("courseName", "courseDescription"))))
+            Course theCourse = Course.builder().id("someId").name("courseName").description("someDescription").build();
+            when(courseService.createCourse(theCourse)).thenReturn(theCourse);
+            mockMvc.perform(jsonPost("/courses", toJson(theCourse)))
                     .andExpect(status().isCreated())
-                    .andExpect(jsonPath("$.id", is(theCreatedCourse.getId())));
+                    .andExpect(jsonPath("$.id", is(theCourse.getId())));
         }
     }
 

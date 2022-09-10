@@ -25,8 +25,9 @@ public class CourseController {
     }
 
     @PostMapping(value="/courses", consumes="application/json", produces="application/json")
-    public ResponseEntity<Course> createCourse(@RequestBody CreateCourseBody body) {
-        var course= courseService.createCourse(body.getName(), body.getDescription());
+    public ResponseEntity<Course> createCourse(@RequestBody Course body) {
+        var course= courseService.createCourse(body);
+        System.out.println(course);
         return new ResponseEntity<>(course, HttpStatus.CREATED);
     }
 }
