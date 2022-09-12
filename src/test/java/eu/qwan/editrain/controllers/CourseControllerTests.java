@@ -3,16 +3,13 @@ package eu.qwan.editrain.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.qwan.editrain.model.Course;
-import eu.qwan.editrain.repositories.CourseRepository;
 import eu.qwan.editrain.services.CourseService;
-import jdk.jfr.ContentType;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -20,9 +17,8 @@ import java.util.List;
 import static eu.qwan.editrain.controllers.MockMvcJsonRequests.jsonGet;
 import static eu.qwan.editrain.controllers.MockMvcJsonRequests.jsonPost;
 import static java.util.Collections.emptyList;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -70,6 +66,13 @@ public class CourseControllerTests {
             mockMvc.perform(jsonPost("/courses", toJson(theCourse)))
                     .andExpect(status().isCreated())
                     .andExpect(jsonPath("$.id", is(theCourse.getId())));
+        }
+
+        @Test
+        public void returns400WhenDataIsNotValid() throws Exception {
+            Course theCourse = Course.builder().id("someId").name("").description("someDescription").build();
+            mockMvc.perform(jsonPost("/courses", toJson(theCourse)))
+                    .andExpect(status().is4xxClientError());
         }
     }
 

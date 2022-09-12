@@ -2,7 +2,6 @@ package eu.qwan.editrain.services;
 
 import eu.qwan.editrain.model.Course;
 import eu.qwan.editrain.repositories.CourseRepository;
-import org.hibernate.id.GUIDGenerator;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

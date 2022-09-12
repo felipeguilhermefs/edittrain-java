@@ -2,6 +2,20 @@
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
+## Calling the service
+
+Add a course:
+
+```shell
+curl -i -X POST localhost:8080/courses --data '{"name":"OO Essentials","description":"Entry level course on OO"}' -H "Content-Type: application/json"
+```
+
+Get all courses:
+
+```shell
+curl localhost:8080/courses
+```
+
 ### What is this repository for? ###
 
 * Quick summary
