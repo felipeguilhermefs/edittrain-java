@@ -59,7 +59,7 @@ public class CourseControllerTests {
     public class PostingACourse {
         @Test
         public void savesIt() throws Exception {
-            Course theCourse = Course.builder().id("someId").name("courseName").description("someDescription").build();
+            Course theCourse = Course.builder().id("someId").name("courseName").description("someDescription").teacher("jack@qwan.eu").build();
             when(courseService.create(theCourse)).thenReturn(Optional.of(theCourse));
             mockMvc.perform(jsonPost("/courses", toJson(theCourse)))
                     .andExpect(status().isCreated())
@@ -78,7 +78,7 @@ public class CourseControllerTests {
     public class PuttingACourse {
         @Test
         public void updatesIt() throws Exception {
-            Course theCourse = Course.builder().id("someId").name("courseName").description("someDescription").build();
+            Course theCourse = Course.builder().id("someId").name("courseName").description("someDescription").teacher("jack@qwan.eu").build();
             mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().isNoContent());
             verify(courseService).update(theCourse);
@@ -86,14 +86,14 @@ public class CourseControllerTests {
 
         @Test
         public void returns400WhenDataIsNotValid() throws Exception {
-            Course theCourse = Course.builder().id("someId").name("").description("someDescription").build();
+            Course theCourse = Course.builder().id("someId").name("").description("someDescription").teacher("jack@qwan.eu").build();
             mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().is4xxClientError());
         }
 
         @Test
         public void returns400WhenIdIsMissing() throws Exception {
-            Course theCourse = Course.builder().name("name").description("someDescription").build();
+            Course theCourse = Course.builder().name("name").description("someDescription").teacher("jack@qwan.eu").build();
             mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().is4xxClientError());
         }

@@ -23,3 +23,8 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
+              - column:
+                  name: teacher
+                  type: varchar(255)
+                  constraints:
+                    nullable: false

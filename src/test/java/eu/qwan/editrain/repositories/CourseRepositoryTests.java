@@ -23,7 +23,7 @@ public class CourseRepositoryTests {
     }
     @Test
     public void containsSavedCourses() {
-        Course course = new Course(UUID.randomUUID().toString(), "name", "description");
+        Course course = new Course(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
         courseRepository.save(course);
         assertThat(courseRepository.findAll(), is(List.of(course)));
     }

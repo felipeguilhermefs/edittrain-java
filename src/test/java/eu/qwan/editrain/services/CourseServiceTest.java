@@ -28,7 +28,7 @@ public class CourseServiceTest {
     class WhenCreatingACourse {
         @Test
         public void savesItInTheRepository() {
-            var createdCourse = courseService.create(new Course("", "name", "description")).get();
+            var createdCourse = courseService.create(new Course("", "name", "description", "marc@edutrain.eu")).get();
             verify(courseRepository).save(createdCourse);
             assertThat(createdCourse.getId(), is(not("")));
         }
@@ -36,7 +36,7 @@ public class CourseServiceTest {
         @Test
         public void failsWhenNewCourseNameIsNotUnique() {
             when(courseRepository.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
-            var createdCourse = courseService.create(new Course("", "name", "description"));
+            var createdCourse = courseService.create(new Course("", "name", "description", "marc@edutrain.eu"));
             assertThat(createdCourse, is(Optional.empty()));
         }
     }
@@ -44,7 +44,7 @@ public class CourseServiceTest {
     class WhenGettingCourses {
         @Test
         public void returnsAllCoursesFromTheRepository() {
-            Course course = new Course("someid", "someName", "someDescription");
+            Course course = new Course("someid", "someName", "someDescription", "marc@edutrain.eu");
             when(courseRepository.findAll()).thenReturn(List.of(course));
             var courses = courseService.findAll();
             assertThat(courses, is(List.of(course)));
@@ -55,7 +55,7 @@ public class CourseServiceTest {
     class WhenUpdatingACourse {
         @Test
         public void savesChangesInTheRepository() {
-            Course course = new Course("someid", "a name", "updated description");
+            Course course = new Course("someid", "a name", "updated description", "marc@edutrain.eu");
             courseService.update(course);
             verify(courseRepository).save(course);
         }
