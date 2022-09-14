@@ -10,6 +10,14 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+class ErrorResponse {
+    public final String error;
+
+    public ErrorResponse(String error) {
+        this.error = error;
+    }
+}
+
 @RestController
 public class CourseController {
     private final CourseService courseService;
@@ -36,5 +44,10 @@ public class CourseController {
 
         courseService.update(body);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @ExceptionHandler(value = RuntimeException.class)
+    public ResponseEntity<ErrorResponse> handleEdiTrainExceptions(RuntimeException exception) {
+        return new ResponseEntity<>(new ErrorResponse(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }

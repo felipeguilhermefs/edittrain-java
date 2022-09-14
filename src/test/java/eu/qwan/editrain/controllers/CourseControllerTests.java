@@ -18,8 +18,7 @@ import java.util.Optional;
 import static eu.qwan.editrain.controllers.MockMvcJsonRequests.*;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -96,6 +95,15 @@ public class CourseControllerTests {
             Course theCourse = Course.builder().name("name").description("someDescription").teacher("jack@qwan.eu").build();
             mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().is4xxClientError());
+        }
+
+        @Test
+        public void returns400WithErrorObjectWhenAnEdiTrainExceptionOccurs() throws Exception {
+            Course theCourse = Course.aValidCourse().build();;
+            doThrow(new RuntimeException("ERROR")).when(courseService).update(any());
+            mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
+                    .andExpect(status().is4xxClientError())
+                    .andExpect(jsonPath("error", is("ERROR")));
         }
     }
 
