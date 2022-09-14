@@ -60,7 +60,7 @@ public class CourseControllerTests {
         @Test
         public void savesIt() throws Exception {
             Course theCourse = Course.builder().id("someId").name("courseName").description("someDescription").build();
-            when(courseService.createCourse(theCourse)).thenReturn(Optional.of(theCourse));
+            when(courseService.create(theCourse)).thenReturn(Optional.of(theCourse));
             mockMvc.perform(jsonPost("/courses", toJson(theCourse)))
                     .andExpect(status().isCreated())
                     .andExpect(jsonPath("$.id", is(theCourse.getId())));

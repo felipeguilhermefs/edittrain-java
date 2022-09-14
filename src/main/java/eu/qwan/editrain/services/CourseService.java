@@ -21,7 +21,7 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    public Optional<Course> createCourse(Course course) {
+    public Optional<Course> create(Course course) {
         course.setId(UUID.randomUUID().toString());
         try {
             courseRepository.save(course);
