@@ -15,10 +15,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.Optional;
 
-import static eu.qwan.editrain.controllers.MockMvcJsonRequests.jsonGet;
-import static eu.qwan.editrain.controllers.MockMvcJsonRequests.jsonPost;
+import static eu.qwan.editrain.controllers.MockMvcJsonRequests.*;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,9 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CourseControllerTests {
     @MockBean
     private CourseService courseService;
-
-    @Autowired
-    private CourseController courseController;
 
     @Autowired
     private MockMvc mockMvc;
@@ -61,7 +58,7 @@ public class CourseControllerTests {
     @Nested
     public class PostingACourse {
         @Test
-        public void savesItInTheDatabase() throws Exception {
+        public void savesIt() throws Exception {
             Course theCourse = Course.builder().id("someId").name("courseName").description("someDescription").build();
             when(courseService.createCourse(theCourse)).thenReturn(Optional.of(theCourse));
             mockMvc.perform(jsonPost("/courses", toJson(theCourse)))
@@ -73,6 +70,31 @@ public class CourseControllerTests {
         public void returns400WhenDataIsNotValid() throws Exception {
             Course theCourse = Course.builder().id("someId").name("").description("someDescription").build();
             mockMvc.perform(jsonPost("/courses", toJson(theCourse)))
+                    .andExpect(status().is4xxClientError());
+        }
+    }
+
+    @Nested
+    public class PuttingACourse {
+        @Test
+        public void updatesIt() throws Exception {
+            Course theCourse = Course.builder().id("someId").name("courseName").description("someDescription").build();
+            mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
+                    .andExpect(status().isNoContent());
+            verify(courseService).update(theCourse);
+        }
+
+        @Test
+        public void returns400WhenDataIsNotValid() throws Exception {
+            Course theCourse = Course.builder().id("someId").name("").description("someDescription").build();
+            mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
+                    .andExpect(status().is4xxClientError());
+        }
+
+        @Test
+        public void returns400WhenIdIsMissing() throws Exception {
+            Course theCourse = Course.builder().name("name").description("someDescription").build();
+            mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().is4xxClientError());
         }
     }

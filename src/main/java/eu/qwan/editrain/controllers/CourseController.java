@@ -4,10 +4,7 @@ import eu.qwan.editrain.model.Course;
 import eu.qwan.editrain.services.CourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -15,7 +12,8 @@ import java.util.Optional;
 
 @RestController
 public class CourseController {
-    private CourseService courseService;
+    private final CourseService courseService;
+
     public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
@@ -30,5 +28,13 @@ public class CourseController {
         var course= courseService.createCourse(body);
         System.out.println(course);
         return new ResponseEntity<>(course, HttpStatus.CREATED);
+    }
+
+    @PutMapping(value="/courses", consumes="application/json", produces="application/json")
+    public ResponseEntity<Optional<Course>> updateCourse(@RequestBody @Valid Course body) {
+        if (body.getId() == null || body.getId().isBlank()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        courseService.update(body);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

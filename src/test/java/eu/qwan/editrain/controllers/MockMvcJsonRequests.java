@@ -7,8 +7,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import java.io.UnsupportedEncodingException;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 public class MockMvcJsonRequests {
     static MockHttpServletRequestBuilder jsonGet(String urlTemplate) {
@@ -17,6 +16,10 @@ public class MockMvcJsonRequests {
 
     static MockHttpServletRequestBuilder jsonPost(String urlTemplate, String body) {
         return post(urlTemplate).accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON).content(body).with(csrf());
+    }
+
+    static MockHttpServletRequestBuilder jsonPut(String urlTemplate, String body) {
+        return put(urlTemplate).accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON).content(body).with(csrf());
     }
 
     static String responseStringFrom(ResultActions resultActions) throws UnsupportedEncodingException {
