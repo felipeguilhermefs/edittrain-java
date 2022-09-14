@@ -2,6 +2,14 @@
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
+Todo:
+v unique name + exception handling
+- update course
+- send message to other service?
+  - subscription service
+  - stub: extra main program
+- scripts for using service
+
 ## Calling the service
 
 Add a course:

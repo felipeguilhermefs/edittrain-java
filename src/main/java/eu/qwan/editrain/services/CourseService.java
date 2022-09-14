@@ -2,14 +2,16 @@ package eu.qwan.editrain.services;
 
 import eu.qwan.editrain.model.Course;
 import eu.qwan.editrain.repositories.CourseRepository;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
 public class CourseService {
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
 
     public CourseService(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
@@ -19,9 +21,13 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    public Course createCourse(Course course) {
+    public Optional<Course> createCourse(Course course) {
         course.setId(UUID.randomUUID().toString());
-        courseRepository.save(course);
-        return course;
+        try {
+            courseRepository.save(course);
+        } catch (ConstraintViolationException nonUniqueName) {
+            return Optional.empty();
+        }
+        return Optional.of(course);
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
 
 import static eu.qwan.editrain.controllers.MockMvcJsonRequests.jsonGet;
 import static eu.qwan.editrain.controllers.MockMvcJsonRequests.jsonPost;
@@ -62,7 +63,7 @@ public class CourseControllerTests {
         @Test
         public void savesItInTheDatabase() throws Exception {
             Course theCourse = Course.builder().id("someId").name("courseName").description("someDescription").build();
-            when(courseService.createCourse(theCourse)).thenReturn(theCourse);
+            when(courseService.createCourse(theCourse)).thenReturn(Optional.of(theCourse));
             mockMvc.perform(jsonPost("/courses", toJson(theCourse)))
                     .andExpect(status().isCreated())
                     .andExpect(jsonPath("$.id", is(theCourse.getId())));
