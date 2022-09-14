@@ -3,6 +3,7 @@ package eu.qwan.editrain.services;
 import eu.qwan.editrain.model.Course;
 import eu.qwan.editrain.repositories.CourseRepository;
 import org.hibernate.exception.ConstraintViolationException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,23 @@ public class CourseServiceTest {
             when(courseRepository.findById(original.getId())).thenReturn(Optional.of(original));
             courseService.update(updated.build());
             verify(courseRepository).save(Course.aValidCourse().description("updated").teacher("original@edutrain.eu").build());
+        }
+
+        @Test
+        public void failsWhenTheCourseDoesNotExist() {
+            var course = Course.aValidCourse().build();
+            when(courseRepository.findById(course.getId())).thenReturn(Optional.empty());
+            Assertions.assertThrows(RuntimeException.class, () -> courseService.update(course));
+            verify(courseRepository, never()).save(any());
+        }
+
+        @Test
+        public void failsWhenNewCourseNameIsNotUnique() {
+            var original = Course.aValidCourse().build();
+            var updated = Course.aValidCourse().name("updated").build();
+            when(courseRepository.findById(original.getId())).thenReturn(Optional.of(original));
+            when(courseRepository.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
+            courseService.update(updated);
         }
     }
 }

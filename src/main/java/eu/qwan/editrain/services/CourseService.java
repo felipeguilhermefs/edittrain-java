@@ -36,9 +36,15 @@ public class CourseService {
     }
 
     public void update(Course course) {
-        var original = courseRepository.findById(course.getId()).get();
-        original.setName(course.getName());
-        original.setDescription(course.getDescription());
-        courseRepository.save(original);
+        courseRepository.findById(course.getId()).ifPresentOrElse(original -> {
+            original.setName(course.getName());
+            original.setDescription(course.getDescription());
+            try {
+                courseRepository.save(original);
+            } catch (Exception probablyNonUniqueName) {
+                logger.error("Probably non unique name for new course", probablyNonUniqueName);
+            }}, () -> {
+            throw new RuntimeException("Course id " + course.getId() + " does not exist");
+        });
     }
 }
