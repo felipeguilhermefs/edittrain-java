@@ -44,7 +44,7 @@ public class CourseServiceTest {
     class WhenGettingCourses {
         @Test
         public void returnsAllCoursesFromTheRepository() {
-            Course course = new Course("someid", "someName", "someDescription", "marc@edutrain.eu");
+            Course course = Course.aValidCourse().build();
             when(courseRepository.findAll()).thenReturn(List.of(course));
             var courses = courseService.findAll();
             assertThat(courses, is(List.of(course)));
@@ -55,9 +55,20 @@ public class CourseServiceTest {
     class WhenUpdatingACourse {
         @Test
         public void savesChangesInTheRepository() {
-            Course course = new Course("someid", "a name", "updated description", "marc@edutrain.eu");
-            courseService.update(course);
-            verify(courseRepository).save(course);
+            var course = Course.aValidCourse().build();
+            var updated = Course.aValidCourse().name("new name").description("updated").build();
+            when(courseRepository.findById(course.getId())).thenReturn(Optional.of(course));
+            courseService.update(updated);
+            verify(courseRepository).save(updated);
+        }
+
+        @Test
+        public void leavesTeacherUnchanged() {
+            var original = Course.aValidCourse().teacher("original@edutrain.eu").build();
+            var updated = Course.aValidCourse().description("updated").teacher("updated@editrain.eu");
+            when(courseRepository.findById(original.getId())).thenReturn(Optional.of(original));
+            courseService.update(updated.build());
+            verify(courseRepository).save(Course.aValidCourse().description("updated").teacher("original@edutrain.eu").build());
         }
     }
 }

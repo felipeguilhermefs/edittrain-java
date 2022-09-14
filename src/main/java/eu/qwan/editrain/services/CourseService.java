@@ -36,6 +36,9 @@ public class CourseService {
     }
 
     public void update(Course course) {
-        courseRepository.save(course);
+        var original = courseRepository.findById(course.getId()).get();
+        original.setName(course.getName());
+        original.setDescription(course.getDescription());
+        courseRepository.save(original);
     }
 }
