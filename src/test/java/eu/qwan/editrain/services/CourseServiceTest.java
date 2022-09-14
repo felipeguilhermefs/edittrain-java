@@ -1,6 +1,7 @@
 package eu.qwan.editrain.services;
 
 import eu.qwan.editrain.model.Course;
+import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.repositories.CourseRepository;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
@@ -76,7 +77,7 @@ public class CourseServiceTest {
         public void failsWhenTheCourseDoesNotExist() {
             var course = Course.aValidCourse().build();
             when(courseRepository.findById(course.getId())).thenReturn(Optional.empty());
-            Assertions.assertThrows(RuntimeException.class, () -> courseService.update(course));
+            Assertions.assertThrows(EdiTrainException.class, () -> courseService.update(course));
             verify(courseRepository, never()).save(any());
         }
 
@@ -86,7 +87,7 @@ public class CourseServiceTest {
             var updated = Course.aValidCourse().name("updated").build();
             when(courseRepository.findById(original.getId())).thenReturn(Optional.of(original));
             when(courseRepository.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
-            Assertions.assertThrows(RuntimeException.class, () -> courseService.update(updated));
+            Assertions.assertThrows(EdiTrainException.class, () -> courseService.update(updated));
         }
     }
 }

@@ -1,6 +1,7 @@
 package eu.qwan.editrain.services;
 
 import eu.qwan.editrain.model.Course;
+import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.repositories.CourseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,9 +44,9 @@ public class CourseService {
                 courseRepository.save(original);
             } catch (Exception probablyNonUniqueName) {
                 logger.error("Probably non unique name for new course", probablyNonUniqueName);
-                throw new RuntimeException("Error updating course, name should be unique");
+                throw new EdiTrainException("Error updating course, name should be unique", probablyNonUniqueName);
             }}, () -> {
-            throw new RuntimeException("Course id " + course.getId() + " does not exist");
+            throw new EdiTrainException("Course id " + course.getId() + " does not exist");
         });
     }
 }

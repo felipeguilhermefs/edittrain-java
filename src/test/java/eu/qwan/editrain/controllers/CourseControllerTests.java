@@ -3,6 +3,7 @@ package eu.qwan.editrain.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.qwan.editrain.model.Course;
+import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.services.CourseService;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -99,8 +100,8 @@ public class CourseControllerTests {
 
         @Test
         public void returns400WithErrorObjectWhenAnEdiTrainExceptionOccurs() throws Exception {
-            Course theCourse = Course.aValidCourse().build();;
-            doThrow(new RuntimeException("ERROR")).when(courseService).update(any());
+            Course theCourse = Course.aValidCourse().build();
+            doThrow(new EdiTrainException("ERROR")).when(courseService).update(any());
             mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().is4xxClientError())
                     .andExpect(jsonPath("error", is("ERROR")));

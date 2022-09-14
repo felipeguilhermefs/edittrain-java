@@ -1,6 +1,7 @@
 package eu.qwan.editrain.controllers;
 
 import eu.qwan.editrain.model.Course;
+import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.services.CourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,8 +47,8 @@ public class CourseController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @ExceptionHandler(value = RuntimeException.class)
-    public ResponseEntity<ErrorResponse> handleEdiTrainExceptions(RuntimeException exception) {
+    @ExceptionHandler(value = EdiTrainException.class)
+    public ResponseEntity<ErrorResponse> handleEdiTrainExceptions(EdiTrainException exception) {
         return new ResponseEntity<>(new ErrorResponse(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }
