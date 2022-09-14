@@ -43,6 +43,7 @@ public class CourseService {
                 courseRepository.save(original);
             } catch (Exception probablyNonUniqueName) {
                 logger.error("Probably non unique name for new course", probablyNonUniqueName);
+                throw new RuntimeException("Error updating course, name should be unique");
             }}, () -> {
             throw new RuntimeException("Course id " + course.getId() + " does not exist");
         });

@@ -86,7 +86,7 @@ public class CourseServiceTest {
             var updated = Course.aValidCourse().name("updated").build();
             when(courseRepository.findById(original.getId())).thenReturn(Optional.of(original));
             when(courseRepository.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
-            courseService.update(updated);
+            Assertions.assertThrows(RuntimeException.class, () -> courseService.update(updated));
         }
     }
 }
