@@ -1,11 +1,10 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+EdiTrain - Hexagonification Exercise
 
-Todo:
-v unique name + exception handling
-- update course
-  - cannot update teacher
+(c) copyright 2022 QWAN - Quality Without a Name - www.qwan.eu
+
+## Todo:
 - send message to other service?
   - subscription service
   - stub: extra main program
@@ -27,29 +26,3 @@ Update a course (name and description only):
 ```shell
 curl -i -X PUT localhost:8080/courses --data '{"id":"<id>","name":"OO Essentials part I","description":"Entry level","teacher":"rob@editrain.eu"}' -H "Content-Type: application/json"
 ```
-
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact

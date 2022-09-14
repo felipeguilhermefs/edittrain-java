@@ -12,7 +12,7 @@
     <artifactId>editrain-java</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>editrain-java</name>
-    <description>editrain-java</description>
+    <description>EdiTrain Java exercise code; (c) 2022 QWAN - www.qwan.eu</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -77,5 +77,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
