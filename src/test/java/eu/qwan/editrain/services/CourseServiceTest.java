@@ -25,9 +25,9 @@ public class CourseServiceTest {
     private CourseService courseService;
 
     @Nested
-    class CreatingACourse {
+    class WhenCreatingACourse {
         @Test
-        public void createsANewCourseAndSavesItInTheRepository() {
+        public void savesItInTheRepository() {
             var createdCourse = courseService.createCourse(new Course("", "name", "description")).get();
             verify(courseRepository).save(createdCourse);
             assertThat(createdCourse.getId(), is(not("")));
@@ -41,13 +41,23 @@ public class CourseServiceTest {
         }
     }
     @Nested
-    class GettingCourses {
+    class WhenGettingCourses {
         @Test
-        public void createsANewCourseAndSavesItInTheRepository() {
+        public void returnsAllCoursesFromTheRepository() {
             Course course = new Course("someid", "someName", "someDescription");
             when(courseRepository.findAll()).thenReturn(List.of(course));
             var courses = courseService.findAll();
             assertThat(courses, is(List.of(course)));
+        }
+    }
+
+    @Nested
+    class WhenUpdatingACourse {
+        @Test
+        public void savesChangesInTheRepository() {
+            Course course = new Course("someid", "a name", "updated description");
+            courseService.update(course);
+            verify(courseRepository).save(course);
         }
     }
 }

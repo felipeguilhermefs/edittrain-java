@@ -30,4 +30,8 @@ public class CourseService {
         }
         return Optional.of(course);
     }
+
+    public void update(Course course) {
+        courseRepository.save(course);
+    }
 }
