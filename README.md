@@ -5,6 +5,7 @@ This README would normally document whatever steps are necessary to get your app
 Todo:
 v unique name + exception handling
 - update course
+  - cannot update teacher
 - send message to other service?
   - subscription service
   - stub: extra main program

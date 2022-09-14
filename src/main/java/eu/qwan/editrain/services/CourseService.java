@@ -2,7 +2,8 @@ package eu.qwan.editrain.services;
 
 import eu.qwan.editrain.model.Course;
 import eu.qwan.editrain.repositories.CourseRepository;
-import org.hibernate.exception.ConstraintViolationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.UUID;
 
 @Component
 public class CourseService {
+    private final Logger logger = LoggerFactory.getLogger(CourseService.class);
+
     private final CourseRepository courseRepository;
 
     public CourseService(CourseRepository courseRepository) {
@@ -25,7 +28,8 @@ public class CourseService {
         course.setId(UUID.randomUUID().toString());
         try {
             courseRepository.save(course);
-        } catch (ConstraintViolationException nonUniqueName) {
+        } catch (Exception probablyNonUniqueName) {
+            logger.error("Probably non unique name for new course", probablyNonUniqueName);
             return Optional.empty();
         }
         return Optional.of(course);
