@@ -41,7 +41,7 @@ public class CourseService {
     }
 
     public void update(Course course) {
-        courseRepository.findById(course.getId()).ifPresentOrElse(original -> {
+        courses.findById(course.getId()).ifPresentOrElse(original -> {
             original.setName(course.getName());
             original.setDescription(course.getDescription());
             try {
