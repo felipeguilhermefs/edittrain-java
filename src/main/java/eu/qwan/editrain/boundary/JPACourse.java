@@ -1,5 +1,6 @@
 package eu.qwan.editrain.boundary;
 
+import eu.qwan.editrain.core.Course;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "courses")
-public class JPACourse {
+public class JPACourse extends Course {
     @Id
     private String id;
     @NotBlank
