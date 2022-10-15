@@ -1,0 +1,21 @@
+package eu.qwan.editrain.boundary;
+
+import eu.qwan.editrain.model.Course;
+import eu.qwan.editrain.repositories.CourseRepository;
+import java.util.List;
+import org.springframework.stereotype.Component;
+
+@Component
+public class JPACourses implements Courses {
+
+    private final CourseRepository repository;
+
+    public JPACourses(CourseRepository repository) {
+        this.repository = repository;
+    }
+
+    @Override
+    public List<Course> findAll() {
+        return repository.findAll();
+    }
+}
