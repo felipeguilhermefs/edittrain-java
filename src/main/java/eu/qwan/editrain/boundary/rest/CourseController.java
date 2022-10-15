@@ -1,4 +1,4 @@
-package eu.qwan.editrain.controllers;
+package eu.qwan.editrain.boundary.rest;
 
 import eu.qwan.editrain.core.Course;
 import eu.qwan.editrain.model.EdiTrainException;

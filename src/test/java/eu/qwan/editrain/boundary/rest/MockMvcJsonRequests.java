@@ -1,4 +1,4 @@
-package eu.qwan.editrain.controllers;
+package eu.qwan.editrain.boundary.rest;
 
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;

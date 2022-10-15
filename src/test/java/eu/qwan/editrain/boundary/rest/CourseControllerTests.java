@@ -1,4 +1,4 @@
-package eu.qwan.editrain.controllers;
+package eu.qwan.editrain.boundary.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.Optional;
 
-import static eu.qwan.editrain.controllers.MockMvcJsonRequests.*;
+import static eu.qwan.editrain.boundary.rest.MockMvcJsonRequests.*;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
