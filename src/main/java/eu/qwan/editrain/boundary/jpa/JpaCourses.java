@@ -1,7 +1,5 @@
 package eu.qwan.editrain.boundary.jpa;
 
-import static java.util.stream.Collectors.toList;
-
 import eu.qwan.editrain.core.Course;
 import eu.qwan.editrain.core.Courses;
 import java.util.List;
@@ -27,7 +25,7 @@ public class JpaCourses implements Courses {
         return repository.findAll()
             .stream()
             .map(mapper::toModel)
-            .collect(toList());
+            .toList();
     }
 
     @Override

@@ -1,7 +1,5 @@
 package eu.qwan.editrain.boundary.rest;
 
-import static java.util.stream.Collectors.toList;
-
 import eu.qwan.editrain.core.EdiTrainException;
 import eu.qwan.editrain.core.Catalog;
 import org.springframework.http.HttpStatus;
@@ -31,7 +29,7 @@ public class RestCourseController {
             catalog.findAllCourses()
                 .stream()
                 .map(mapper::toDto)
-                .collect(toList())
+                .toList()
         );
     }
 
