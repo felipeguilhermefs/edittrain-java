@@ -32,7 +32,7 @@ public class JpaCourseCatalog implements CourseCatalog {
 
     @Override
     public Course save(Course course) {
-        return toModel(repository.save(toJPA(course)));
+        return toModel(repository.save(toJpa(course)));
     }
 
     private Course toModel(JpaCourse jpa) {
@@ -44,7 +44,7 @@ public class JpaCourseCatalog implements CourseCatalog {
         return course;
     }
 
-    private JpaCourse toJPA(Course model) {
+    private JpaCourse toJpa(Course model) {
         var course = new JpaCourse();
         course.setId(model.getId());
         course.setName(model.getName());
