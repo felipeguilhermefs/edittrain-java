@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 public class CourseServiceTest {
     private CourseRepository courseRepository = mock(CourseRepository.class);
     private Courses courses = new JPACourses(courseRepository);
-    private CourseService courseService = new CourseService(courseRepository, courses);
+    private CourseService courseService = new CourseService(courses);
 
     @Nested
     class WhenCreatingACourse {

@@ -17,11 +17,9 @@ import java.util.UUID;
 public class CourseService {
     private final Logger logger = LoggerFactory.getLogger(CourseService.class);
 
-    private final CourseRepository courseRepository;
-    private Courses courses;
+    private final Courses courses;
 
-    public CourseService(CourseRepository courseRepository, Courses courses) {
-        this.courseRepository = courseRepository;
+    public CourseService(Courses courses) {
         this.courses = courses;
     }
 
