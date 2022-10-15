@@ -42,7 +42,7 @@ public class CourseService {
         return Optional.of(course);
     }
 
-    public void update(JPACourse course) {
+    public void update(Course course) {
         courses.findById(course.getId()).ifPresentOrElse(original -> {
             original.setName(course.getName());
             original.setDescription(course.getDescription());

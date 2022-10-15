@@ -1,12 +1,8 @@
 package eu.qwan.editrain.controllers;
 
-import static java.util.stream.Collectors.toList;
-
-import eu.qwan.editrain.boundary.JPACourse;
 import eu.qwan.editrain.core.Course;
 import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.services.CourseService;
-import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +35,6 @@ public class CourseController {
     @PostMapping(value="/courses", consumes="application/json", produces="application/json")
     public ResponseEntity<Optional<Course>> createCourse(@RequestBody @Valid Course body) {
         var course= courseService.create(body);
-        System.out.println(course);
         return new ResponseEntity<>(course, HttpStatus.CREATED);
     }
 
@@ -47,7 +42,7 @@ public class CourseController {
     public ResponseEntity<Optional<Course>> updateCourse(@RequestBody @Valid Course body) {
         if (body.getId() == null || body.getId().isBlank()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        courseService.update(body.toJPA());
+        courseService.update(body);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

@@ -53,25 +53,25 @@ public class CourseServiceTest {
         @Test
         public void savesChangesInTheRepository() {
             var course = JPACourse.aValidCourse().build();
-            var updated = JPACourse.aValidCourse().name("new name").description("updated").build();
+            var updated = Course.aValidCourse().name("new name").description("updated").build();
             when(courses.findById(course.getId())).thenReturn(Optional.of(course));
             courseService.update(updated);
-            verify(courses).save(updated);
+            verify(courses).save(updated.toJPA());
         }
 
         @Test
         public void leavesTeacherUnchanged() {
             var original = JPACourse.aValidCourse().teacher("original@edutrain.eu").build();
-            var updated = JPACourse.aValidCourse().description("updated").teacher("updated@editrain.eu");
+            var updated = Course.aValidCourse().description("updated").teacher("updated@editrain.eu").build();
             when(courses.findById(original.getId())).thenReturn(Optional.of(original));
-            courseService.update(updated.build());
+            courseService.update(updated);
             verify(courses).save(
                 JPACourse.aValidCourse().description("updated").teacher("original@edutrain.eu").build());
         }
 
         @Test
         public void failsWhenTheCourseDoesNotExist() {
-            var course = JPACourse.aValidCourse().build();
+            var course = Course.aValidCourse().build();
             when(courses.findById(course.getId())).thenReturn(Optional.empty());
             Assertions.assertThrows(EdiTrainException.class, () -> courseService.update(course));
             verify(courses, never()).save(any());
@@ -80,7 +80,7 @@ public class CourseServiceTest {
         @Test
         public void failsWhenNewCourseNameIsNotUnique() {
             var original = JPACourse.aValidCourse().build();
-            var updated = JPACourse.aValidCourse().name("updated").build();
+            var updated = Course.aValidCourse().name("updated").build();
             when(courses.findById(original.getId())).thenReturn(Optional.of(original));
             when(courses.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
             Assertions.assertThrows(EdiTrainException.class, () -> courseService.update(updated));

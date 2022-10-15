@@ -2,7 +2,6 @@ package eu.qwan.editrain.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.qwan.editrain.boundary.JPACourse;
 import eu.qwan.editrain.core.Course;
 import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.services.CourseService;
@@ -69,7 +68,7 @@ public class CourseControllerTests {
 
         @Test
         public void returns400WhenDataIsNotValid() throws Exception {
-            JPACourse theCourse = JPACourse.builder().id("someId").name("").description("someDescription").build();
+            var theCourse = Course.builder().id("someId").name("").description("someDescription").build();
             mockMvc.perform(jsonPost("/courses", toJson(theCourse)))
                     .andExpect(status().is4xxClientError());
         }
@@ -79,7 +78,7 @@ public class CourseControllerTests {
     public class PuttingACourse {
         @Test
         public void updatesIt() throws Exception {
-            JPACourse theCourse = JPACourse.builder().id("someId").name("courseName").description("someDescription").teacher("jack@qwan.eu").build();
+            var theCourse = Course.builder().id("someId").name("courseName").description("someDescription").teacher("jack@qwan.eu").build();
             mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().isNoContent());
             verify(courseService).update(theCourse);
@@ -87,21 +86,21 @@ public class CourseControllerTests {
 
         @Test
         public void returns400WhenDataIsNotValid() throws Exception {
-            JPACourse theCourse = JPACourse.builder().id("someId").name("").description("someDescription").teacher("jack@qwan.eu").build();
+            var theCourse = Course.builder().id("someId").name("").description("someDescription").teacher("jack@qwan.eu").build();
             mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().is4xxClientError());
         }
 
         @Test
         public void returns400WhenIdIsMissing() throws Exception {
-            JPACourse theCourse = JPACourse.builder().name("name").description("someDescription").teacher("jack@qwan.eu").build();
+            var theCourse = Course.builder().name("name").description("someDescription").teacher("jack@qwan.eu").build();
             mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().is4xxClientError());
         }
 
         @Test
         public void returns400WithErrorObjectWhenAnEdiTrainExceptionOccurs() throws Exception {
-            JPACourse theCourse = JPACourse.aValidCourse().build();
+            var theCourse = Course.aValidCourse().build();
             doThrow(new EdiTrainException("ERROR")).when(courseService).update(any());
             mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().is4xxClientError())

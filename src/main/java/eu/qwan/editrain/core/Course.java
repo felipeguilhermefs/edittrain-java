@@ -1,6 +1,7 @@
 package eu.qwan.editrain.core;
 
 import eu.qwan.editrain.boundary.JPACourse;
+import eu.qwan.editrain.boundary.JPACourse.JPACourseBuilder;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,5 +36,9 @@ public class Course {
         course.setDescription(description);
         course.setTeacher(teacher);
         return course;
+    }
+
+    public static CourseBuilder aValidCourse() {
+        return builder().id("some-id").name("Design Fundamentals").description("Some description").teacher("teacher@editrain.eu");
     }
 }
