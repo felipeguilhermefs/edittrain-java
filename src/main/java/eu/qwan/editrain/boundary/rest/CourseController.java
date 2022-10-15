@@ -11,14 +11,6 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-class ErrorResponse {
-    public final String error;
-
-    public ErrorResponse(String error) {
-        this.error = error;
-    }
-}
-
 @RestController
 public class CourseController {
     private final CourseService courseService;
