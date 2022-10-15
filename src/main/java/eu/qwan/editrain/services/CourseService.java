@@ -20,9 +20,9 @@ public class CourseService {
     private final CourseRepository courseRepository;
     private Courses courses;
 
-    public CourseService(CourseRepository courseRepository) {
+    public CourseService(CourseRepository courseRepository, Courses courses) {
         this.courseRepository = courseRepository;
-        this.courses = new JPACourses(courseRepository);
+        this.courses = courses;
     }
 
     public List<Course> findAll() {
