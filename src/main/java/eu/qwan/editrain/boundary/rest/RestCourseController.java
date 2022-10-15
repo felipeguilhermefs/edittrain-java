@@ -2,7 +2,7 @@ package eu.qwan.editrain.boundary.rest;
 
 import static java.util.stream.Collectors.toList;
 
-import eu.qwan.editrain.model.EdiTrainException;
+import eu.qwan.editrain.core.EdiTrainException;
 import eu.qwan.editrain.services.CourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
