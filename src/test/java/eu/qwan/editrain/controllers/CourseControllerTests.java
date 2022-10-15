@@ -3,6 +3,7 @@ package eu.qwan.editrain.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.qwan.editrain.boundary.JPACourse;
+import eu.qwan.editrain.core.Course;
 import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.services.CourseService;
 import org.junit.jupiter.api.Nested;
@@ -44,7 +45,7 @@ public class CourseControllerTests {
         public void getCourses_ReturnsAListOfCoursesWhenCoursesExistInRepository() throws Exception {
             JPACourse course1 = JPACourse.builder().id("1").name("Course1").description("someDescription1").build();
             JPACourse course2 = JPACourse.builder().id("2").name("Course2").description("someDescription2").build();
-            when(courseService.findAll()).thenReturn(List.of(course1, course2));
+            when(courseService.findAll()).thenReturn(List.of(Course.from(course1), Course.from(course2)));
             mockMvc.perform(jsonGet("/courses"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$[0].id", is("1")))
