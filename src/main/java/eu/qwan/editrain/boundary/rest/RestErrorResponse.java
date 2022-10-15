@@ -1,9 +1,9 @@
 package eu.qwan.editrain.boundary.rest;
 
-public class ErrorResponse {
+public class RestErrorResponse {
     public final String error;
 
-    public ErrorResponse(String error) {
+    public RestErrorResponse(String error) {
         this.error = error;
     }
 }

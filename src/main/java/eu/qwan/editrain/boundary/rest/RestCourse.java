@@ -4,7 +4,7 @@ import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class CourseDto {
+public class RestCourse {
     private String id;
     @NotBlank
     private String name;
