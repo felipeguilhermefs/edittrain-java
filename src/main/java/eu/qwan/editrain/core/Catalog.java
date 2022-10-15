@@ -18,11 +18,11 @@ public class Catalog {
         this.courses = courses;
     }
 
-    public List<Course> findAll() {
+    public List<Course> findAllCourses() {
         return courses.findAll();
     }
 
-    public Optional<Course> create(Course course) {
+    public Optional<Course> addCourse(Course course) {
         course.setId(UUID.randomUUID().toString());
         try {
             courses.save(course);
@@ -33,7 +33,7 @@ public class Catalog {
         return Optional.of(course);
     }
 
-    public void update(Course course) {
+    public void updateCourse(Course course) {
         courses.findById(course.getId()).ifPresentOrElse(original -> {
             original.setName(course.getName());
             original.setDescription(course.getDescription());

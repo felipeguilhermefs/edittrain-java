@@ -36,7 +36,7 @@ public class RestCourseControllerTests {
     public class GettingAllCourses {
         @Test
         public void getCourses_ReturnsAnEmptyListWhenNoCoursesArePresent() throws Exception {
-            when(catalog.findAll()).thenReturn(emptyList());
+            when(catalog.findAllCourses()).thenReturn(emptyList());
             mockMvc.perform(jsonGet("/courses")).andExpect(status().isOk());
         }
 
@@ -44,7 +44,7 @@ public class RestCourseControllerTests {
         public void getCourses_ReturnsAListOfCoursesWhenCoursesExistInRepository() throws Exception {
             var course1 = Course.builder().id("1").name("Course1").description("someDescription1").build();
             var course2 = Course.builder().id("2").name("Course2").description("someDescription2").build();
-            when(catalog.findAll()).thenReturn(List.of(course1, course2));
+            when(catalog.findAllCourses()).thenReturn(List.of(course1, course2));
             mockMvc.perform(jsonGet("/courses"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$[0].id", is("1")))
@@ -60,7 +60,7 @@ public class RestCourseControllerTests {
         @Test
         public void savesIt() throws Exception {
             var theCourse = Course.builder().id("someId").name("courseName").description("someDescription").teacher("jack@qwan.eu").build();
-            when(catalog.create(theCourse)).thenReturn(Optional.of(theCourse));
+            when(catalog.addCourse(theCourse)).thenReturn(Optional.of(theCourse));
             mockMvc.perform(jsonPost("/courses", toJson(theCourse)))
                     .andExpect(status().isCreated())
                     .andExpect(jsonPath("$.id", is(theCourse.getId())));
@@ -81,7 +81,7 @@ public class RestCourseControllerTests {
             var theCourse = Course.builder().id("someId").name("courseName").description("someDescription").teacher("jack@qwan.eu").build();
             mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().isNoContent());
-            verify(catalog).update(theCourse);
+            verify(catalog).updateCourse(theCourse);
         }
 
         @Test
@@ -101,7 +101,7 @@ public class RestCourseControllerTests {
         @Test
         public void returns400WithErrorObjectWhenAnEdiTrainExceptionOccurs() throws Exception {
             var theCourse = Course.aValidCourse().build();
-            doThrow(new EdiTrainException("ERROR")).when(catalog).update(any());
+            doThrow(new EdiTrainException("ERROR")).when(catalog).updateCourse(any());
             mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().is4xxClientError())
                     .andExpect(jsonPath("error", is("ERROR")));
