@@ -15,17 +15,17 @@ public class JPACourses implements Courses {
     }
 
     @Override
-    public List<Course> findAll() {
+    public List<JPACourse> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public Optional<Course> findById(String id) {
+    public Optional<JPACourse> findById(String id) {
         return repository.findById(id);
     }
 
     @Override
-    public Course save(Course course) {
+    public JPACourse save(JPACourse course) {
         return repository.save(course);
     }
 }

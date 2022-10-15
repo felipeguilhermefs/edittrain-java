@@ -24,7 +24,7 @@ public class JPACoursesTests {
 
     @Test
     public void containsSavedCourses() {
-        Course course = new Course(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
+        JPACourse course = new JPACourse(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
         courses.save(course);
         assertThat(courses.findAll(), is(List.of(course)));
     }

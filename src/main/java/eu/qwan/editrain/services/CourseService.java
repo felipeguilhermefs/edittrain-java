@@ -1,7 +1,7 @@
 package eu.qwan.editrain.services;
 
 import eu.qwan.editrain.core.Courses;
-import eu.qwan.editrain.boundary.Course;
+import eu.qwan.editrain.boundary.JPACourse;
 import eu.qwan.editrain.model.EdiTrainException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +21,11 @@ public class CourseService {
         this.courses = courses;
     }
 
-    public List<Course> findAll() {
+    public List<JPACourse> findAll() {
         return courses.findAll();
     }
 
-    public Optional<Course> create(Course course) {
+    public Optional<JPACourse> create(JPACourse course) {
         course.setId(UUID.randomUUID().toString());
         try {
             courses.save(course);
@@ -36,7 +36,7 @@ public class CourseService {
         return Optional.of(course);
     }
 
-    public void update(Course course) {
+    public void update(JPACourse course) {
         courses.findById(course.getId()).ifPresentOrElse(original -> {
             original.setName(course.getName());
             original.setDescription(course.getDescription());
