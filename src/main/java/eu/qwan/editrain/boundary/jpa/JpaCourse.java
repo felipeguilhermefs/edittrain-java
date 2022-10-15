@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "courses")
-public class JPACourse {
+public class JpaCourse {
     @Id
     private String id;
     private String name;

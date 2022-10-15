@@ -9,11 +9,11 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JPACourses implements Courses {
+public class JpaCourses implements Courses {
 
-    private final CourseRepository repository;
+    private final JpaCourseRepository repository;
 
-    public JPACourses(CourseRepository repository) {
+    public JpaCourses(JpaCourseRepository repository) {
         this.repository = repository;
     }
 
@@ -35,7 +35,7 @@ public class JPACourses implements Courses {
         return toModel(repository.save(toJPA(course)));
     }
 
-    private Course toModel(JPACourse jpa) {
+    private Course toModel(JpaCourse jpa) {
         var course = new Course();
         course.setId(jpa.getId());
         course.setName(jpa.getName());
@@ -44,8 +44,8 @@ public class JPACourses implements Courses {
         return course;
     }
 
-    private JPACourse toJPA(Course model) {
-        var course = new JPACourse();
+    private JpaCourse toJPA(Course model) {
+        var course = new JpaCourse();
         course.setId(model.getId());
         course.setName(model.getName());
         course.setDescription(model.getDescription());
