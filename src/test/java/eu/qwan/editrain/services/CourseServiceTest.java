@@ -19,12 +19,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
 public class CourseServiceTest {
-    @MockBean
-    private CourseRepository courseRepository;
-    @Autowired
-    private CourseService courseService;
+    private CourseRepository courseRepository = mock(CourseRepository.class);
+    private CourseService courseService = new CourseService(courseRepository);
 
     @Nested
     class WhenCreatingACourse {
