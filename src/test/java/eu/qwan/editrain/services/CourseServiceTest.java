@@ -1,5 +1,6 @@
 package eu.qwan.editrain.services;
 
+import eu.qwan.editrain.core.Course;
 import eu.qwan.editrain.core.Courses;
 import eu.qwan.editrain.boundary.JPACourse;
 import eu.qwan.editrain.model.EdiTrainException;
@@ -43,7 +44,7 @@ public class CourseServiceTest {
             JPACourse course = JPACourse.aValidCourse().build();
             when(courses.findAll()).thenReturn(List.of(course));
             var courses = courseService.findAll();
-            assertThat(courses, is(List.of(course)));
+            assertThat(courses, is(List.of(Course.from(course))));
         }
     }
 

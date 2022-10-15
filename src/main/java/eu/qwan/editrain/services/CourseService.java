@@ -1,5 +1,8 @@
 package eu.qwan.editrain.services;
 
+import static java.util.stream.Collectors.toList;
+
+import eu.qwan.editrain.core.Course;
 import eu.qwan.editrain.core.Courses;
 import eu.qwan.editrain.boundary.JPACourse;
 import eu.qwan.editrain.model.EdiTrainException;
@@ -21,8 +24,11 @@ public class CourseService {
         this.courses = courses;
     }
 
-    public List<JPACourse> findAll() {
-        return courses.findAll();
+    public List<Course> findAll() {
+        return courses.findAll()
+            .stream()
+            .map(Course::from)
+            .collect(toList());
     }
 
     public Optional<JPACourse> create(JPACourse course) {

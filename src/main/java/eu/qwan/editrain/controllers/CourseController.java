@@ -33,11 +33,7 @@ public class CourseController {
 
     @GetMapping("/courses")
     public ResponseEntity<List<Course>> getCourses() {
-        return ResponseEntity.ok(courseService.findAll()
-            .stream()
-            .map(Course::from)
-            .collect(toList())
-        );
+        return ResponseEntity.ok(courseService.findAll());
     }
 
     @PostMapping(value="/courses", consumes="application/json", produces="application/json")
