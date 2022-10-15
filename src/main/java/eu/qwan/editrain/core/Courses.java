@@ -10,5 +10,5 @@ public interface Courses {
 
     Optional<JPACourse> findById(String id);
 
-    JPACourse save(JPACourse course);
+    Course save(Course course);
 }

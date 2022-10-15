@@ -30,7 +30,7 @@ public class CourseService {
     public Optional<Course> create(Course course) {
         course.setId(UUID.randomUUID().toString());
         try {
-            courses.save(course.toJPA());
+            courses.save(course);
         } catch (Exception probablyNonUniqueName) {
             logger.error("Probably non unique name for new course", probablyNonUniqueName);
             return Optional.empty();
@@ -43,7 +43,7 @@ public class CourseService {
             original.setName(course.getName());
             original.setDescription(course.getDescription());
             try {
-                courses.save(original);
+                courses.save(Course.from(original));
             } catch (Exception probablyNonUniqueName) {
                 logger.error("Probably non unique name for new course", probablyNonUniqueName);
                 throw new EdiTrainException("Error updating course, name should be unique", probablyNonUniqueName);

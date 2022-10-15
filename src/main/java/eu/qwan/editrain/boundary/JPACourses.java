@@ -31,7 +31,7 @@ public class JPACourses implements Courses {
     }
 
     @Override
-    public JPACourse save(JPACourse course) {
-        return repository.save(course);
+    public Course save(Course course) {
+        return Course.from(repository.save(course.toJPA()));
     }
 }
