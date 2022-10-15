@@ -25,15 +25,15 @@ public class CourseServiceTest {
     class WhenCreatingACourse {
         @Test
         public void savesItInTheRepository() {
-            var createdCourse = courseService.create(new JPACourse("", "name", "description", "marc@edutrain.eu")).get();
-            verify(courses).save(createdCourse);
+            var createdCourse = courseService.create(new Course("", "name", "description", "marc@edutrain.eu")).get();
+            verify(courses).save(createdCourse.toJPA());
             assertThat(createdCourse.getId(), is(not("")));
         }
 
         @Test
         public void failsWhenNewCourseNameIsNotUnique() {
             when(courses.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
-            var createdCourse = courseService.create(new JPACourse("", "name", "description", "marc@edutrain.eu"));
+            var createdCourse = courseService.create(new Course("", "name", "description", "marc@edutrain.eu"));
             assertThat(createdCourse, is(Optional.empty()));
         }
     }

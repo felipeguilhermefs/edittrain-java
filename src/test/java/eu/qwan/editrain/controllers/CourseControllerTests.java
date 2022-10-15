@@ -60,7 +60,7 @@ public class CourseControllerTests {
     public class PostingACourse {
         @Test
         public void savesIt() throws Exception {
-            JPACourse theCourse = JPACourse.builder().id("someId").name("courseName").description("someDescription").teacher("jack@qwan.eu").build();
+            var theCourse = Course.builder().id("someId").name("courseName").description("someDescription").teacher("jack@qwan.eu").build();
             when(courseService.create(theCourse)).thenReturn(Optional.of(theCourse));
             mockMvc.perform(jsonPost("/courses", toJson(theCourse)))
                     .andExpect(status().isCreated())
