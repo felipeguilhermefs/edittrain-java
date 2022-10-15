@@ -3,7 +3,7 @@ package eu.qwan.editrain.boundary.rest;
 import static java.util.stream.Collectors.toList;
 
 import eu.qwan.editrain.core.EdiTrainException;
-import eu.qwan.editrain.core.CourseService;
+import eu.qwan.editrain.core.Catalog;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,21 +14,21 @@ import java.util.Optional;
 
 @RestController
 public class RestCourseController {
-    private final CourseService courseService;
+    private final Catalog catalog;
     private final RestCourseMapper mapper;
 
     public RestCourseController(
-        CourseService courseService,
+        Catalog catalog,
         RestCourseMapper mapper
     ) {
-        this.courseService = courseService;
+        this.catalog = catalog;
         this.mapper = mapper;
     }
 
     @GetMapping("/courses")
     public ResponseEntity<List<RestCourse>> getCourses() {
         return ResponseEntity.ok(
-            courseService.findAll()
+            catalog.findAll()
                 .stream()
                 .map(mapper::toDto)
                 .collect(toList())
@@ -39,7 +39,7 @@ public class RestCourseController {
     public ResponseEntity<Optional<RestCourse>> createCourse(@RequestBody @Valid RestCourse body) {
         var course = mapper.toModel(body);
         return new ResponseEntity<>(
-            courseService.create(course).map(mapper::toDto),
+            catalog.create(course).map(mapper::toDto),
             HttpStatus.CREATED
         );
     }
@@ -49,7 +49,7 @@ public class RestCourseController {
         if (body.getId() == null || body.getId().isBlank()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         var course = mapper.toModel(body);
-        courseService.update(course);
+        catalog.update(course);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
