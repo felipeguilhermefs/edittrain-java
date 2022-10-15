@@ -26,7 +26,7 @@ public class CourseServiceTest {
         @Test
         public void savesItInTheRepository() {
             var createdCourse = courseService.create(new Course("", "name", "description", "marc@edutrain.eu")).get();
-            verify(courses).save(createdCourse.toJPA());
+            verify(courses).save(createdCourse);
             assertThat(createdCourse.getId(), is(not("")));
         }
 
@@ -56,7 +56,7 @@ public class CourseServiceTest {
             var updated = Course.aValidCourse().name("new name").description("updated").build();
             when(courses.findById(course.getId())).thenReturn(Optional.of(course));
             courseService.update(updated);
-            verify(courses).save(updated.toJPA());
+            verify(courses).save(updated);
         }
 
         @Test
@@ -66,7 +66,7 @@ public class CourseServiceTest {
             when(courses.findById(original.getId())).thenReturn(Optional.of(original));
             courseService.update(updated);
             verify(courses).save(
-                JPACourse.aValidCourse().description("updated").teacher("original@edutrain.eu").build());
+                Course.aValidCourse().description("updated").teacher("original@edutrain.eu").build());
         }
 
         @Test

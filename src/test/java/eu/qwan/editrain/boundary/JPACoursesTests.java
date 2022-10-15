@@ -1,5 +1,6 @@
 package eu.qwan.editrain.boundary;
 
+import eu.qwan.editrain.core.Course;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +25,7 @@ public class JPACoursesTests {
 
     @Test
     public void containsSavedCourses() {
-        JPACourse course = new JPACourse(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
+        var course = new Course(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
         courses.save(course);
         assertThat(courses.findAll(), is(List.of(course)));
     }
