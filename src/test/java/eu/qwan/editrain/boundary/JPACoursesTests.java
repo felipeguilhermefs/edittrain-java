@@ -1,6 +1,5 @@
 package eu.qwan.editrain.boundary;
 
-import eu.qwan.editrain.model.Course;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

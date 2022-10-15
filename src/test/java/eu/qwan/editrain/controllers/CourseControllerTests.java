@@ -2,7 +2,7 @@ package eu.qwan.editrain.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.qwan.editrain.model.Course;
+import eu.qwan.editrain.boundary.Course;
 import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.services.CourseService;
 import org.junit.jupiter.api.Nested;
