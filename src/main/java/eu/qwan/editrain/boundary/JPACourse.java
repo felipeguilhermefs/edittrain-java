@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "courses")
-public class Course {
+public class JPACourse {
     @Id
     private String id;
     @NotBlank
@@ -23,7 +23,7 @@ public class Course {
     @NotBlank
     private String teacher;
 
-    public static CourseBuilder aValidCourse() {
+    public static JPACourseBuilder aValidCourse() {
         return builder().id("some-id").name("Design Fundamentals").description("Some description").teacher("teacher@editrain.eu");
     }
 }
