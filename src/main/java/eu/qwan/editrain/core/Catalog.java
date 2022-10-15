@@ -9,12 +9,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class CourseService {
-    private final Logger logger = LoggerFactory.getLogger(CourseService.class);
+public class Catalog {
+    private final Logger logger = LoggerFactory.getLogger(Catalog.class);
 
     private final Courses courses;
 
-    public CourseService(Courses courses) {
+    public Catalog(Courses courses) {
         this.courses = courses;
     }
 

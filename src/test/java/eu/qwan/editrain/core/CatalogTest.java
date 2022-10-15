@@ -13,15 +13,15 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.*;
 
-public class CourseServiceTest {
+public class CatalogTest {
     private final Courses courses = mock(Courses.class);
-    private final CourseService courseService = new CourseService(courses);
+    private final Catalog catalog = new Catalog(courses);
 
     @Nested
     class WhenCreatingACourse {
         @Test
         public void savesItInTheRepository() {
-            var createdCourse = courseService.create(new Course("", "name", "description", "marc@edutrain.eu")).get();
+            var createdCourse = catalog.create(new Course("", "name", "description", "marc@edutrain.eu")).get();
             verify(courses).save(createdCourse);
             assertThat(createdCourse.getId(), is(not("")));
         }
@@ -29,7 +29,7 @@ public class CourseServiceTest {
         @Test
         public void failsWhenNewCourseNameIsNotUnique() {
             when(courses.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
-            var createdCourse = courseService.create(new Course("", "name", "description", "marc@edutrain.eu"));
+            var createdCourse = catalog.create(new Course("", "name", "description", "marc@edutrain.eu"));
             assertThat(createdCourse, is(Optional.empty()));
         }
     }
@@ -39,7 +39,7 @@ public class CourseServiceTest {
         public void returnsAllCoursesFromTheRepository() {
             var course = Course.aValidCourse().build();
             when(courses.findAll()).thenReturn(List.of(course));
-            var courses = courseService.findAll();
+            var courses = catalog.findAll();
             assertThat(courses, is(List.of(course)));
         }
     }
@@ -51,7 +51,7 @@ public class CourseServiceTest {
             var course = Course.aValidCourse().build();
             var updated = Course.aValidCourse().name("new name").description("updated").build();
             when(courses.findById(course.getId())).thenReturn(Optional.of(course));
-            courseService.update(updated);
+            catalog.update(updated);
             verify(courses).save(updated);
         }
 
@@ -60,7 +60,7 @@ public class CourseServiceTest {
             var original = Course.aValidCourse().teacher("original@edutrain.eu").build();
             var updated = Course.aValidCourse().description("updated").teacher("updated@editrain.eu").build();
             when(courses.findById(original.getId())).thenReturn(Optional.of(original));
-            courseService.update(updated);
+            catalog.update(updated);
             verify(courses).save(
                 Course.aValidCourse().description("updated").teacher("original@edutrain.eu").build());
         }
@@ -69,7 +69,7 @@ public class CourseServiceTest {
         public void failsWhenTheCourseDoesNotExist() {
             var course = Course.aValidCourse().build();
             when(courses.findById(course.getId())).thenReturn(Optional.empty());
-            Assertions.assertThrows(EdiTrainException.class, () -> courseService.update(course));
+            Assertions.assertThrows(EdiTrainException.class, () -> catalog.update(course));
             verify(courses, never()).save(any());
         }
 
@@ -79,7 +79,7 @@ public class CourseServiceTest {
             var updated = Course.aValidCourse().name("updated").build();
             when(courses.findById(original.getId())).thenReturn(Optional.of(original));
             when(courses.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
-            Assertions.assertThrows(EdiTrainException.class, () -> courseService.update(updated));
+            Assertions.assertThrows(EdiTrainException.class, () -> catalog.update(updated));
         }
     }
 }
