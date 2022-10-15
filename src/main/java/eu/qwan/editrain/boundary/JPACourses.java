@@ -18,4 +18,9 @@ public class JPACourses implements Courses {
     public List<Course> findAll() {
         return repository.findAll();
     }
+
+    @Override
+    public Course save(Course course) {
+        return repository.save(course);
+    }
 }
