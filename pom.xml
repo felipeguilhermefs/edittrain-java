@@ -14,7 +14,7 @@
     <name>editrain-java</name>
     <description>EdiTrain Java exercise code; (c) 2022 QWAN - www.qwan.eu</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>18</java.version>
     </properties>
     <dependencies>
         <dependency>
