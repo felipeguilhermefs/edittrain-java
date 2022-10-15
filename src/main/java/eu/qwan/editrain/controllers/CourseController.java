@@ -38,8 +38,7 @@ public class CourseController {
 
     @PostMapping(value="/courses", consumes="application/json", produces="application/json")
     public ResponseEntity<Optional<Course>> createCourse(@RequestBody @Valid Course body) {
-        var course= courseService.create(body.toJPA())
-            .map(Course::from);
+        var course= courseService.create(body);
         System.out.println(course);
         return new ResponseEntity<>(course, HttpStatus.CREATED);
     }

@@ -31,10 +31,10 @@ public class CourseService {
             .collect(toList());
     }
 
-    public Optional<JPACourse> create(JPACourse course) {
+    public Optional<Course> create(Course course) {
         course.setId(UUID.randomUUID().toString());
         try {
-            courses.save(course);
+            courses.save(course.toJPA());
         } catch (Exception probablyNonUniqueName) {
             logger.error("Probably non unique name for new course", probablyNonUniqueName);
             return Optional.empty();
