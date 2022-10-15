@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 public class RestCourseMapper {
 
     public Course toModel(RestCourse dto) {
-        var course = new Course();
-        course.setId(dto.getId());
-        course.setName(dto.getName());
-        course.setDescription(dto.getDescription());
-        course.setTeacher(dto.getTeacher());
-        return course;
+        return Course.builder()
+            .id(dto.getId())
+            .name(dto.getName())
+            .description(dto.getDescription())
+            .teacher(dto.getTeacher())
+            .build();
     }
 
     public RestCourse toDto(Course model) {

@@ -25,7 +25,12 @@ public class JpaCoursesTests {
 
     @Test
     public void containsSavedCourses() {
-        var course = new Course(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
+        var course = Course.builder()
+            .id(UUID.randomUUID().toString())
+            .name("name")
+            .description("description")
+            .teacher("john@edutrain.eu")
+            .build();
         courses.save(course);
         assertThat(courses.findAll(), is(List.of(course)));
     }
