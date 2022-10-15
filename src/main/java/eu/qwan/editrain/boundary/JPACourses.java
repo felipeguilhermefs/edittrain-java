@@ -1,7 +1,6 @@
 package eu.qwan.editrain.boundary;
 
 import eu.qwan.editrain.model.Course;
-import eu.qwan.editrain.repositories.CourseRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Component;
