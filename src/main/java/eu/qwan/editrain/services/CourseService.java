@@ -1,5 +1,6 @@
 package eu.qwan.editrain.services;
 
+import eu.qwan.editrain.boundary.Courses;
 import eu.qwan.editrain.model.Course;
 import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.repositories.CourseRepository;
@@ -16,13 +17,20 @@ public class CourseService {
     private final Logger logger = LoggerFactory.getLogger(CourseService.class);
 
     private final CourseRepository courseRepository;
+    private Courses courses;
 
     public CourseService(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
+        this.courses = new Courses() {
+            @Override
+            public List<Course> findAll() {
+                return courseRepository.findAll();
+            }
+        };
     }
 
     public List<Course> findAll() {
-        return courseRepository.findAll();
+        return courses.findAll();
     }
 
     public Optional<Course> create(Course course) {
