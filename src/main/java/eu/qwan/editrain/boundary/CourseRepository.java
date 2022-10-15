@@ -1,4 +1,4 @@
-package eu.qwan.editrain.repositories;
+package eu.qwan.editrain.boundary;
 
 import eu.qwan.editrain.model.Course;
 import org.springframework.data.jpa.repository.JpaRepository;

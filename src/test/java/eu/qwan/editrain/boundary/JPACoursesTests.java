@@ -1,6 +1,5 @@
-package eu.qwan.editrain.repositories;
+package eu.qwan.editrain.boundary;
 
-import com.fasterxml.jackson.databind.deser.std.UUIDDeserializer;
 import eu.qwan.editrain.model.Course;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +13,20 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 
 @SpringBootTest
-public class CourseRepositoryTests {
+public class JPACoursesTests {
+
     @Autowired
-    CourseRepository courseRepository;
+    JPACourses courses;
+
     @Test
     public void isEmptyInitially() {
-        assertThat(courseRepository.findAll(), is(empty()));
+        assertThat(courses.findAll(), is(empty()));
     }
+
     @Test
     public void containsSavedCourses() {
         Course course = new Course(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
-        courseRepository.save(course);
-        assertThat(courseRepository.findAll(), is(List.of(course)));
+        courses.save(course);
+        assertThat(courses.findAll(), is(List.of(course)));
     }
 }
