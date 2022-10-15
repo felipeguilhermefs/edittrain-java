@@ -1,6 +1,5 @@
 package eu.qwan.editrain.core;
 
-import eu.qwan.editrain.boundary.JPACourse;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,24 +17,6 @@ public class Course {
     private String description;
     @NotBlank
     private String teacher;
-
-    public static Course from(JPACourse jpa) {
-        var course = new Course();
-        course.setId(jpa.getId());
-        course.setName(jpa.getName());
-        course.setDescription(jpa.getDescription());
-        course.setTeacher(jpa.getTeacher());
-        return course;
-    }
-
-    public JPACourse toJPA() {
-        var course = new JPACourse();
-        course.setId(id);
-        course.setName(name);
-        course.setDescription(description);
-        course.setTeacher(teacher);
-        return course;
-    }
 
     public static CourseBuilder aValidCourse() {
         return builder().id("some-id").name("Design Fundamentals").description("Some description").teacher("teacher@editrain.eu");
