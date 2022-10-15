@@ -1,7 +1,5 @@
 package eu.qwan.editrain.services;
 
-import static java.util.stream.Collectors.toList;
-
 import eu.qwan.editrain.core.Course;
 import eu.qwan.editrain.core.Courses;
 import eu.qwan.editrain.model.EdiTrainException;
