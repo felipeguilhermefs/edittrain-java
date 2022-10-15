@@ -32,6 +32,18 @@ public class CatalogTest {
             var createdCourse = catalog.addCourse(new Course("", "name", "description", "marc@edutrain.eu"));
             assertThat(createdCourse, is(Optional.empty()));
         }
+
+        @Test
+        public void failsWhenThereIsNoName() {
+            var theCourse = Course.builder().id("someId").name("").description("someDescription").teacher("jack@qwan.eu").build();
+            Assertions.assertThrows(EdiTrainException.class, () -> catalog.addCourse(theCourse));
+        }
+
+        @Test
+        public void failsWhenThereIsNoTeacher() {
+            var theCourse = Course.builder().id("someId").name("name").description("someDescription").teacher("").build();
+            Assertions.assertThrows(EdiTrainException.class, () -> catalog.addCourse(theCourse));
+        }
     }
     @Nested
     class WhenGettingCourses {
@@ -80,6 +92,24 @@ public class CatalogTest {
             when(courses.findById(original.getId())).thenReturn(Optional.of(original));
             when(courses.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
             Assertions.assertThrows(EdiTrainException.class, () -> catalog.updateCourse(updated));
+        }
+
+        @Test
+        public void failsWhenThereIsNoId() {
+            var theCourse = Course.builder().name("name").description("someDescription").teacher("jack@qwan.eu").build();
+            Assertions.assertThrows(EdiTrainException.class, () -> catalog.updateCourse(theCourse));
+        }
+
+        @Test
+        public void failsWhenThereIsNoName() {
+            var theCourse = Course.builder().id("someId").name("").description("someDescription").teacher("jack@qwan.eu").build();
+            Assertions.assertThrows(EdiTrainException.class, () -> catalog.updateCourse(theCourse));
+        }
+
+        @Test
+        public void failsWhenThereIsNoTeacher() {
+            var theCourse = Course.builder().id("someId").name("name").description("someDescription").teacher("").build();
+            Assertions.assertThrows(EdiTrainException.class, () -> catalog.updateCourse(theCourse));
         }
     }
 }

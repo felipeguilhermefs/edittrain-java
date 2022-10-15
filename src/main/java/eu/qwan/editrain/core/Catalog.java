@@ -1,5 +1,7 @@
 package eu.qwan.editrain.core;
 
+import static org.apache.logging.log4j.util.Strings.isBlank;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,7 @@ public class Catalog {
 
     public Optional<Course> addCourse(Course course) {
         course.setId(UUID.randomUUID().toString());
+        validate(course);
         try {
             courses.save(course);
         } catch (Exception probablyNonUniqueName) {
@@ -34,6 +37,7 @@ public class Catalog {
     }
 
     public void updateCourse(Course course) {
+        validate(course);
         courses.findById(course.getId()).ifPresentOrElse(original -> {
             original.setName(course.getName());
             original.setDescription(course.getDescription());
@@ -45,5 +49,11 @@ public class Catalog {
             }}, () -> {
             throw new EdiTrainException("Course id " + course.getId() + " does not exist");
         });
+    }
+
+    private void validate(Course course) throws EdiTrainException {
+        if (isBlank(course.getId())) throw new EdiTrainException("Course 'ID' is required");
+        if (isBlank(course.getName())) throw new EdiTrainException("Course 'name' is required");
+        if (isBlank(course.getTeacher())) throw new EdiTrainException("Course 'teacher' is required");
     }
 }
