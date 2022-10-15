@@ -1,6 +1,5 @@
 package eu.qwan.editrain.core;
 
-import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,10 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Course {
     private String id;
-    @NotBlank
     private String name;
     private String description;
-    @NotBlank
     private String teacher;
 
     public static CourseBuilder aValidCourse() {
