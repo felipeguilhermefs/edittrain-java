@@ -2,7 +2,6 @@ package eu.qwan.editrain.services;
 
 import eu.qwan.editrain.core.Course;
 import eu.qwan.editrain.core.Courses;
-import eu.qwan.editrain.boundary.JPACourse;
 import eu.qwan.editrain.model.EdiTrainException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
@@ -52,7 +51,7 @@ public class CourseServiceTest {
     class WhenUpdatingACourse {
         @Test
         public void savesChangesInTheRepository() {
-            var course = JPACourse.aValidCourse().build();
+            var course = Course.aValidCourse().build();
             var updated = Course.aValidCourse().name("new name").description("updated").build();
             when(courses.findById(course.getId())).thenReturn(Optional.of(course));
             courseService.update(updated);
@@ -61,7 +60,7 @@ public class CourseServiceTest {
 
         @Test
         public void leavesTeacherUnchanged() {
-            var original = JPACourse.aValidCourse().teacher("original@edutrain.eu").build();
+            var original = Course.aValidCourse().teacher("original@edutrain.eu").build();
             var updated = Course.aValidCourse().description("updated").teacher("updated@editrain.eu").build();
             when(courses.findById(original.getId())).thenReturn(Optional.of(original));
             courseService.update(updated);
@@ -79,7 +78,7 @@ public class CourseServiceTest {
 
         @Test
         public void failsWhenNewCourseNameIsNotUnique() {
-            var original = JPACourse.aValidCourse().build();
+            var original = Course.aValidCourse().build();
             var updated = Course.aValidCourse().name("updated").build();
             when(courses.findById(original.getId())).thenReturn(Optional.of(original));
             when(courses.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));

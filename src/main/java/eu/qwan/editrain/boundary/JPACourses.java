@@ -26,8 +26,8 @@ public class JPACourses implements Courses {
     }
 
     @Override
-    public Optional<JPACourse> findById(String id) {
-        return repository.findById(id);
+    public Optional<Course> findById(String id) {
+        return repository.findById(id).map(Course::from);
     }
 
     @Override
