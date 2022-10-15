@@ -1,4 +1,4 @@
-package eu.qwan.editrain.boundary;
+package eu.qwan.editrain.boundary.jpa;
 
 import eu.qwan.editrain.core.Course;
 import org.junit.jupiter.api.Test;
