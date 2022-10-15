@@ -3,17 +3,17 @@ package eu.qwan.editrain.boundary.jpa;
 import static java.util.stream.Collectors.toList;
 
 import eu.qwan.editrain.core.Course;
-import eu.qwan.editrain.core.Courses;
+import eu.qwan.editrain.core.CourseCatalog;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 @Component
-public class JpaCourses implements Courses {
+public class JpaCourseCatalog implements CourseCatalog {
 
     private final JpaCourseRepository repository;
 
-    public JpaCourses(JpaCourseRepository repository) {
+    public JpaCourseCatalog(JpaCourseRepository repository) {
         this.repository = repository;
     }
 
