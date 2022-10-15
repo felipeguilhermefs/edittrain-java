@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 public class JpaCourseMapper {
 
     public Course toModel(JpaCourse entity) {
-        var course = new Course();
-        course.setId(entity.getId());
-        course.setName(entity.getName());
-        course.setDescription(entity.getDescription());
-        course.setTeacher(entity.getTeacher());
-        return course;
+        return Course.builder()
+            .id(entity.getId())
+            .name(entity.getName())
+            .description(entity.getDescription())
+            .teacher(entity.getTeacher())
+            .build();
     }
 
     public JpaCourse toEntity(Course model) {
