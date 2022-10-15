@@ -21,7 +21,7 @@ public class CatalogTest {
     class WhenCreatingACourse {
         @Test
         public void savesItInTheRepository() {
-            var createdCourse = catalog.create(new Course("", "name", "description", "marc@edutrain.eu")).get();
+            var createdCourse = catalog.addCourse(new Course("", "name", "description", "marc@edutrain.eu")).get();
             verify(courses).save(createdCourse);
             assertThat(createdCourse.getId(), is(not("")));
         }
@@ -29,7 +29,7 @@ public class CatalogTest {
         @Test
         public void failsWhenNewCourseNameIsNotUnique() {
             when(courses.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
-            var createdCourse = catalog.create(new Course("", "name", "description", "marc@edutrain.eu"));
+            var createdCourse = catalog.addCourse(new Course("", "name", "description", "marc@edutrain.eu"));
             assertThat(createdCourse, is(Optional.empty()));
         }
     }
@@ -39,7 +39,7 @@ public class CatalogTest {
         public void returnsAllCoursesFromTheRepository() {
             var course = Course.aValidCourse().build();
             when(courses.findAll()).thenReturn(List.of(course));
-            var courses = catalog.findAll();
+            var courses = catalog.findAllCourses();
             assertThat(courses, is(List.of(course)));
         }
     }
@@ -51,7 +51,7 @@ public class CatalogTest {
             var course = Course.aValidCourse().build();
             var updated = Course.aValidCourse().name("new name").description("updated").build();
             when(courses.findById(course.getId())).thenReturn(Optional.of(course));
-            catalog.update(updated);
+            catalog.updateCourse(updated);
             verify(courses).save(updated);
         }
 
@@ -60,7 +60,7 @@ public class CatalogTest {
             var original = Course.aValidCourse().teacher("original@edutrain.eu").build();
             var updated = Course.aValidCourse().description("updated").teacher("updated@editrain.eu").build();
             when(courses.findById(original.getId())).thenReturn(Optional.of(original));
-            catalog.update(updated);
+            catalog.updateCourse(updated);
             verify(courses).save(
                 Course.aValidCourse().description("updated").teacher("original@edutrain.eu").build());
         }
@@ -69,7 +69,7 @@ public class CatalogTest {
         public void failsWhenTheCourseDoesNotExist() {
             var course = Course.aValidCourse().build();
             when(courses.findById(course.getId())).thenReturn(Optional.empty());
-            Assertions.assertThrows(EdiTrainException.class, () -> catalog.update(course));
+            Assertions.assertThrows(EdiTrainException.class, () -> catalog.updateCourse(course));
             verify(courses, never()).save(any());
         }
 
@@ -79,7 +79,7 @@ public class CatalogTest {
             var updated = Course.aValidCourse().name("updated").build();
             when(courses.findById(original.getId())).thenReturn(Optional.of(original));
             when(courses.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
-            Assertions.assertThrows(EdiTrainException.class, () -> catalog.update(updated));
+            Assertions.assertThrows(EdiTrainException.class, () -> catalog.updateCourse(updated));
         }
     }
 }

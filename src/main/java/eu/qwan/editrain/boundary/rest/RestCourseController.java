@@ -28,7 +28,7 @@ public class RestCourseController {
     @GetMapping("/courses")
     public ResponseEntity<List<RestCourse>> getCourses() {
         return ResponseEntity.ok(
-            catalog.findAll()
+            catalog.findAllCourses()
                 .stream()
                 .map(mapper::toDto)
                 .collect(toList())
@@ -39,7 +39,7 @@ public class RestCourseController {
     public ResponseEntity<Optional<RestCourse>> createCourse(@RequestBody @Valid RestCourse body) {
         var course = mapper.toModel(body);
         return new ResponseEntity<>(
-            catalog.create(course).map(mapper::toDto),
+            catalog.addCourse(course).map(mapper::toDto),
             HttpStatus.CREATED
         );
     }
@@ -49,7 +49,7 @@ public class RestCourseController {
         if (body.getId() == null || body.getId().isBlank()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         var course = mapper.toModel(body);
-        catalog.update(course);
+        catalog.updateCourse(course);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
