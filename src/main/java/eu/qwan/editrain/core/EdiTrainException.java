@@ -1,4 +1,4 @@
-package eu.qwan.editrain.model;
+package eu.qwan.editrain.core;
 
 public class EdiTrainException extends RuntimeException {
     public EdiTrainException(String message) {

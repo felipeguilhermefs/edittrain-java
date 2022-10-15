@@ -2,7 +2,7 @@ package eu.qwan.editrain.services;
 
 import eu.qwan.editrain.core.Course;
 import eu.qwan.editrain.core.CourseCatalog;
-import eu.qwan.editrain.model.EdiTrainException;
+import eu.qwan.editrain.core.EdiTrainException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
