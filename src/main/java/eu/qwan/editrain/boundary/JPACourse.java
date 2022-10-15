@@ -1,13 +1,11 @@
 package eu.qwan.editrain.boundary;
 
-import eu.qwan.editrain.core.Course;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data
@@ -15,13 +13,11 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "courses")
-public class JPACourse extends Course {
+public class JPACourse {
     @Id
     private String id;
-    @NotBlank
     private String name;
     private String description;
-    @NotBlank
     private String teacher;
 
     public static JPACourseBuilder aValidCourse() {

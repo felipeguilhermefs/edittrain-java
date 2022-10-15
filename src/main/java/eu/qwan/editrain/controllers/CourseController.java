@@ -1,8 +1,12 @@
 package eu.qwan.editrain.controllers;
 
+import static java.util.stream.Collectors.toList;
+
 import eu.qwan.editrain.boundary.JPACourse;
+import eu.qwan.editrain.core.Course;
 import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.services.CourseService;
+import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,22 +32,27 @@ public class CourseController {
     }
 
     @GetMapping("/courses")
-    public ResponseEntity<List<JPACourse>> getCourses() {
-        return ResponseEntity.ok(courseService.findAll());
+    public ResponseEntity<List<Course>> getCourses() {
+        return ResponseEntity.ok(courseService.findAll()
+            .stream()
+            .map(Course::from)
+            .collect(toList())
+        );
     }
 
     @PostMapping(value="/courses", consumes="application/json", produces="application/json")
-    public ResponseEntity<Optional<JPACourse>> createCourse(@RequestBody @Valid JPACourse body) {
-        var course= courseService.create(body);
+    public ResponseEntity<Optional<Course>> createCourse(@RequestBody @Valid Course body) {
+        var course= courseService.create(body.toJPA())
+            .map(Course::from);
         System.out.println(course);
         return new ResponseEntity<>(course, HttpStatus.CREATED);
     }
 
     @PutMapping(value="/courses", consumes="application/json", produces="application/json")
-    public ResponseEntity<Optional<JPACourse>> updateCourse(@RequestBody @Valid JPACourse body) {
+    public ResponseEntity<Optional<Course>> updateCourse(@RequestBody @Valid Course body) {
         if (body.getId() == null || body.getId().isBlank()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        courseService.update(body);
+        courseService.update(body.toJPA());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
