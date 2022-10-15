@@ -67,10 +67,12 @@ public class RestCourseControllerTests {
         }
 
         @Test
-        public void returns400WhenDataIsNotValid() throws Exception {
-            var theCourse = Course.builder().id("someId").name("").description("someDescription").build();
+        public void returns400WithErrorObjectWhenAnEdiTrainExceptionOccurs() throws Exception {
+            var theCourse = Course.aValidCourse().build();
+            doThrow(new EdiTrainException("ERROR")).when(catalog).addCourse(any());
             mockMvc.perform(jsonPost("/courses", toJson(theCourse)))
-                    .andExpect(status().is4xxClientError());
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("error", is("ERROR")));
         }
     }
 
@@ -82,20 +84,6 @@ public class RestCourseControllerTests {
             mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().isNoContent());
             verify(catalog).updateCourse(theCourse);
-        }
-
-        @Test
-        public void returns400WhenDataIsNotValid() throws Exception {
-            var theCourse = Course.builder().id("someId").name("").description("someDescription").teacher("jack@qwan.eu").build();
-            mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
-                    .andExpect(status().is4xxClientError());
-        }
-
-        @Test
-        public void returns400WhenIdIsMissing() throws Exception {
-            var theCourse = Course.builder().name("name").description("someDescription").teacher("jack@qwan.eu").build();
-            mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
-                    .andExpect(status().is4xxClientError());
         }
 
         @Test
