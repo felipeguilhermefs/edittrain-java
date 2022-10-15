@@ -44,8 +44,6 @@ public class RestCourseController {
 
     @PutMapping(value="/courses", consumes="application/json", produces="application/json")
     public ResponseEntity<Optional<RestCourse>> updateCourse(@RequestBody @Valid RestCourse body) {
-        if (body.getId() == null || body.getId().isBlank()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-
         var course = mapper.toModel(body);
         catalog.updateCourse(course);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
