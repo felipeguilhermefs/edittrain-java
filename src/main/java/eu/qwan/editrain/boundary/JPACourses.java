@@ -1,5 +1,8 @@
 package eu.qwan.editrain.boundary;
 
+import static java.util.stream.Collectors.toList;
+
+import eu.qwan.editrain.core.Course;
 import eu.qwan.editrain.core.Courses;
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +18,11 @@ public class JPACourses implements Courses {
     }
 
     @Override
-    public List<JPACourse> findAll() {
-        return repository.findAll();
+    public List<Course> findAll() {
+        return repository.findAll()
+            .stream()
+            .map(Course::from)
+            .collect(toList());
     }
 
     @Override
