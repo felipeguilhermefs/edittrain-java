@@ -1,8 +1,5 @@
-package eu.qwan.editrain.services;
+package eu.qwan.editrain.core;
 
-import eu.qwan.editrain.core.Course;
-import eu.qwan.editrain.core.Courses;
-import eu.qwan.editrain.core.EdiTrainException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
