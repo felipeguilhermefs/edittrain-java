@@ -2,7 +2,6 @@ package eu.qwan.editrain.boundary.rest;
 
 import static java.util.stream.Collectors.toList;
 
-import eu.qwan.editrain.core.Course;
 import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.services.CourseService;
 import org.springframework.http.HttpStatus;
@@ -14,20 +13,20 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class CourseController {
+public class RestCourseController {
     private final CourseService courseService;
-    private final CourseDtoMapper mapper;
+    private final RestCourseMapper mapper;
 
-    public CourseController(
+    public RestCourseController(
         CourseService courseService,
-        CourseDtoMapper mapper
+        RestCourseMapper mapper
     ) {
         this.courseService = courseService;
         this.mapper = mapper;
     }
 
     @GetMapping("/courses")
-    public ResponseEntity<List<CourseDto>> getCourses() {
+    public ResponseEntity<List<RestCourse>> getCourses() {
         return ResponseEntity.ok(
             courseService.findAll()
                 .stream()
@@ -37,7 +36,7 @@ public class CourseController {
     }
 
     @PostMapping(value="/courses", consumes="application/json", produces="application/json")
-    public ResponseEntity<Optional<CourseDto>> createCourse(@RequestBody @Valid CourseDto body) {
+    public ResponseEntity<Optional<RestCourse>> createCourse(@RequestBody @Valid RestCourse body) {
         var course = mapper.toModel(body);
         return new ResponseEntity<>(
             courseService.create(course).map(mapper::toDto),
@@ -46,7 +45,7 @@ public class CourseController {
     }
 
     @PutMapping(value="/courses", consumes="application/json", produces="application/json")
-    public ResponseEntity<Optional<CourseDto>> updateCourse(@RequestBody @Valid CourseDto body) {
+    public ResponseEntity<Optional<RestCourse>> updateCourse(@RequestBody @Valid RestCourse body) {
         if (body.getId() == null || body.getId().isBlank()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         var course = mapper.toModel(body);
@@ -55,7 +54,7 @@ public class CourseController {
     }
 
     @ExceptionHandler(value = EdiTrainException.class)
-    public ResponseEntity<ErrorResponse> handleEdiTrainExceptions(EdiTrainException exception) {
-        return new ResponseEntity<>(new ErrorResponse(exception.getMessage()), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<RestErrorResponse> handleEdiTrainExceptions(EdiTrainException exception) {
+        return new ResponseEntity<>(new RestErrorResponse(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }

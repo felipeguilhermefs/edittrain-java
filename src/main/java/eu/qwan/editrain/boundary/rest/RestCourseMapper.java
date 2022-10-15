@@ -4,9 +4,9 @@ import eu.qwan.editrain.core.Course;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CourseDtoMapper {
+public class RestCourseMapper {
 
-    public Course toModel(CourseDto dto) {
+    public Course toModel(RestCourse dto) {
         var course = new Course();
         course.setId(dto.getId());
         course.setName(dto.getName());
@@ -15,8 +15,8 @@ public class CourseDtoMapper {
         return course;
     }
 
-    public CourseDto toDto(Course model) {
-        var course = new CourseDto();
+    public RestCourse toDto(Course model) {
+        var course = new RestCourse();
         course.setId(model.getId());
         course.setName(model.getName());
         course.setDescription(model.getDescription());
