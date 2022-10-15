@@ -1,5 +1,7 @@
 package eu.qwan.editrain.services;
 
+import eu.qwan.editrain.boundary.Courses;
+import eu.qwan.editrain.boundary.JPACourses;
 import eu.qwan.editrain.model.Course;
 import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.repositories.CourseRepository;
@@ -21,7 +23,8 @@ import static org.mockito.Mockito.*;
 
 public class CourseServiceTest {
     private CourseRepository courseRepository = mock(CourseRepository.class);
-    private CourseService courseService = new CourseService(courseRepository);
+    private Courses courses = new JPACourses(courseRepository);
+    private CourseService courseService = new CourseService(courseRepository, courses);
 
     @Nested
     class WhenCreatingACourse {
