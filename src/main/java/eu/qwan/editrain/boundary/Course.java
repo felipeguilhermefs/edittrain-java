@@ -1,4 +1,4 @@
-package eu.qwan.editrain.model;
+package eu.qwan.editrain.boundary;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

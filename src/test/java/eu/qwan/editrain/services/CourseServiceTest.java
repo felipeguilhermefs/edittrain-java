@@ -1,7 +1,7 @@
 package eu.qwan.editrain.services;
 
 import eu.qwan.editrain.core.Courses;
-import eu.qwan.editrain.model.Course;
+import eu.qwan.editrain.boundary.Course;
 import eu.qwan.editrain.model.EdiTrainException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;

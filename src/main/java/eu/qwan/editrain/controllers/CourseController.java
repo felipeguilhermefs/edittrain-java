@@ -1,6 +1,6 @@
 package eu.qwan.editrain.controllers;
 
-import eu.qwan.editrain.model.Course;
+import eu.qwan.editrain.boundary.Course;
 import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.services.CourseService;
 import org.springframework.http.HttpStatus;

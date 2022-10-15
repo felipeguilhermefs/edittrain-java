@@ -1,6 +1,6 @@
 package eu.qwan.editrain.core;
 
-import eu.qwan.editrain.model.Course;
+import eu.qwan.editrain.boundary.Course;
 import java.util.List;
 import java.util.Optional;
 
