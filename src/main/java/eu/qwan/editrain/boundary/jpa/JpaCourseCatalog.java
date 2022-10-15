@@ -12,44 +12,33 @@ import org.springframework.stereotype.Component;
 public class JpaCourseCatalog implements CourseCatalog {
 
     private final JpaCourseRepository repository;
+    private final JpaCourseMapper mapper;
 
-    public JpaCourseCatalog(JpaCourseRepository repository) {
+    public JpaCourseCatalog(
+        JpaCourseRepository repository,
+        JpaCourseMapper mapper
+    ) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     @Override
     public List<Course> findAll() {
         return repository.findAll()
             .stream()
-            .map(this::toModel)
+            .map(mapper::toModel)
             .collect(toList());
     }
 
     @Override
     public Optional<Course> findById(String id) {
-        return repository.findById(id).map(this::toModel);
+        return repository.findById(id).map(mapper::toModel);
     }
 
     @Override
     public Course save(Course course) {
-        return toModel(repository.save(toJpa(course)));
-    }
-
-    private Course toModel(JpaCourse jpa) {
-        var course = new Course();
-        course.setId(jpa.getId());
-        course.setName(jpa.getName());
-        course.setDescription(jpa.getDescription());
-        course.setTeacher(jpa.getTeacher());
-        return course;
-    }
-
-    private JpaCourse toJpa(Course model) {
-        var course = new JpaCourse();
-        course.setId(model.getId());
-        course.setName(model.getName());
-        course.setDescription(model.getDescription());
-        course.setTeacher(model.getTeacher());
-        return course;
+        var entity = mapper.toEntity(course);
+        var saved = repository.save(entity);
+        return mapper.toModel(saved);
     }
 }
