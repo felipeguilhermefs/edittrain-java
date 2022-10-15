@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.qwan.editrain.core.Course;
 import eu.qwan.editrain.core.EdiTrainException;
-import eu.qwan.editrain.services.CourseService;
+import eu.qwan.editrain.core.CourseService;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
