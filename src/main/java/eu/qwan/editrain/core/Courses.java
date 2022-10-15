@@ -3,7 +3,7 @@ package eu.qwan.editrain.core;
 import java.util.List;
 import java.util.Optional;
 
-public interface CourseCatalog {
+public interface Courses {
 
     List<Course> findAll();
 
