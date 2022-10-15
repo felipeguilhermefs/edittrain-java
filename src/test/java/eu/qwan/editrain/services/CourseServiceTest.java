@@ -41,10 +41,10 @@ public class CourseServiceTest {
     class WhenGettingCourses {
         @Test
         public void returnsAllCoursesFromTheRepository() {
-            JPACourse course = JPACourse.aValidCourse().build();
+            var course = Course.aValidCourse().build();
             when(courses.findAll()).thenReturn(List.of(course));
             var courses = courseService.findAll();
-            assertThat(courses, is(List.of(Course.from(course))));
+            assertThat(courses, is(List.of(course)));
         }
     }
 

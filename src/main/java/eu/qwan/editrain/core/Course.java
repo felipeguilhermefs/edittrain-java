@@ -1,7 +1,6 @@
 package eu.qwan.editrain.core;
 
 import eu.qwan.editrain.boundary.JPACourse;
-import eu.qwan.editrain.boundary.JPACourse.JPACourseBuilder;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.toList;
 
 import eu.qwan.editrain.core.Course;
 import eu.qwan.editrain.core.Courses;
-import eu.qwan.editrain.boundary.JPACourse;
 import eu.qwan.editrain.model.EdiTrainException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +24,7 @@ public class CourseService {
     }
 
     public List<Course> findAll() {
-        return courses.findAll()
-            .stream()
-            .map(Course::from)
-            .collect(toList());
+        return courses.findAll();
     }
 
     public Optional<Course> create(Course course) {

@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface Courses {
 
-    List<JPACourse> findAll();
+    List<Course> findAll();
 
     Optional<JPACourse> findById(String id);
 
