@@ -1,6 +1,6 @@
 package eu.qwan.editrain.services;
 
-import eu.qwan.editrain.boundary.Courses;
+import eu.qwan.editrain.core.Courses;
 import eu.qwan.editrain.model.Course;
 import eu.qwan.editrain.model.EdiTrainException;
 import org.slf4j.Logger;
