@@ -13,20 +13,20 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 
 @SpringBootTest
-public class JpaCoursesTests {
+public class JpaCourseCatalogTests {
 
     @Autowired
-    JpaCourses courses;
+    JpaCourseCatalog courseCatalog;
 
     @Test
     public void isEmptyInitially() {
-        assertThat(courses.findAll(), is(empty()));
+        assertThat(courseCatalog.findAll(), is(empty()));
     }
 
     @Test
     public void containsSavedCourses() {
         var course = new Course(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
-        courses.save(course);
-        assertThat(courses.findAll(), is(List.of(course)));
+        courseCatalog.save(course);
+        assertThat(courseCatalog.findAll(), is(List.of(course)));
     }
 }

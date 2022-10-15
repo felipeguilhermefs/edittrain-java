@@ -1,7 +1,7 @@
 package eu.qwan.editrain.services;
 
 import eu.qwan.editrain.core.Course;
-import eu.qwan.editrain.core.Courses;
+import eu.qwan.editrain.core.CourseCatalog;
 import eu.qwan.editrain.model.EdiTrainException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,20 +15,20 @@ import java.util.UUID;
 public class CourseService {
     private final Logger logger = LoggerFactory.getLogger(CourseService.class);
 
-    private final Courses courses;
+    private final CourseCatalog courseCatalog;
 
-    public CourseService(Courses courses) {
-        this.courses = courses;
+    public CourseService(CourseCatalog courseCatalog) {
+        this.courseCatalog = courseCatalog;
     }
 
     public List<Course> findAll() {
-        return courses.findAll();
+        return courseCatalog.findAll();
     }
 
     public Optional<Course> create(Course course) {
         course.setId(UUID.randomUUID().toString());
         try {
-            courses.save(course);
+            courseCatalog.save(course);
         } catch (Exception probablyNonUniqueName) {
             logger.error("Probably non unique name for new course", probablyNonUniqueName);
             return Optional.empty();
@@ -37,11 +37,11 @@ public class CourseService {
     }
 
     public void update(Course course) {
-        courses.findById(course.getId()).ifPresentOrElse(original -> {
+        courseCatalog.findById(course.getId()).ifPresentOrElse(original -> {
             original.setName(course.getName());
             original.setDescription(course.getDescription());
             try {
-                courses.save(original);
+                courseCatalog.save(original);
             } catch (Exception probablyNonUniqueName) {
                 logger.error("Probably non unique name for new course", probablyNonUniqueName);
                 throw new EdiTrainException("Error updating course, name should be unique", probablyNonUniqueName);
