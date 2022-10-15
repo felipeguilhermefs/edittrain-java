@@ -21,17 +21,35 @@ public class JPACourses implements Courses {
     public List<Course> findAll() {
         return repository.findAll()
             .stream()
-            .map(Course::from)
+            .map(this::toModel)
             .collect(toList());
     }
 
     @Override
     public Optional<Course> findById(String id) {
-        return repository.findById(id).map(Course::from);
+        return repository.findById(id).map(this::toModel);
     }
 
     @Override
     public Course save(Course course) {
-        return Course.from(repository.save(course.toJPA()));
+        return toModel(repository.save(toJPA(course)));
+    }
+
+    private Course toModel(JPACourse jpa) {
+        var course = new Course();
+        course.setId(jpa.getId());
+        course.setName(jpa.getName());
+        course.setDescription(jpa.getDescription());
+        course.setTeacher(jpa.getTeacher());
+        return course;
+    }
+
+    private JPACourse toJPA(Course model) {
+        var course = new JPACourse();
+        course.setId(model.getId());
+        course.setName(model.getName());
+        course.setDescription(model.getDescription());
+        course.setTeacher(model.getTeacher());
+        return course;
     }
 }
