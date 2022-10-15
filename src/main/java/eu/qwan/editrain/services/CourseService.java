@@ -1,6 +1,7 @@
 package eu.qwan.editrain.services;
 
 import eu.qwan.editrain.boundary.Courses;
+import eu.qwan.editrain.boundary.JPACourses;
 import eu.qwan.editrain.model.Course;
 import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.repositories.CourseRepository;
@@ -21,12 +22,7 @@ public class CourseService {
 
     public CourseService(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
-        this.courses = new Courses() {
-            @Override
-            public List<Course> findAll() {
-                return courseRepository.findAll();
-            }
-        };
+        this.courses = new JPACourses(courseRepository);
     }
 
     public List<Course> findAll() {
