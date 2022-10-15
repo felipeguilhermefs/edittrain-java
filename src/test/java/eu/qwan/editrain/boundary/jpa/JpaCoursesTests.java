@@ -13,10 +13,10 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 
 @SpringBootTest
-public class JPACoursesTests {
+public class JpaCoursesTests {
 
     @Autowired
-    JPACourses courses;
+    JpaCourses courses;
 
     @Test
     public void isEmptyInitially() {
